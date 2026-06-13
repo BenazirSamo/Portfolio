@@ -3,593 +3,1456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benazir Samo | Frontend Developer</title>
+    <title>Benazir Samo | Full Stack Developer | Websites & Web Apps</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Default Dark Mode */
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #5a52e0;
+            --secondary: #ff6584;
+            --gradient: linear-gradient(135deg, #6c63ff 0%, #a855f7 50%, #ec4899 100%);
+            
+            /* Dark mode colors (default) */
+            --bg: #0a0a2a;
+            --bg-2: #0d0d35;
+            --bg-3: #13133d;
+            --surface-card: rgba(20, 20, 50, 0.8);
+            --border: rgba(108, 99, 255, 0.25);
+            --text: #ffffff;
+            --text-muted: #b0b0d0;
+            --navbar-bg: rgba(10, 10, 42, 0.95);
+            --footer-bg: #050520;
+            --skill-bg: rgba(108, 99, 255, 0.12);
+        }
+
+        /* Light Mode Class */
+        body.light-mode {
+            --bg: #f0f2f8;
+            --bg-2: #ffffff;
+            --bg-3: #e8ecf5;
+            --surface-card: #ffffff;
+            --border: rgba(108, 99, 255, 0.2);
+            --text: #1a1a2e;
+            --text-muted: #555555;
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #e8ecf5;
+            --skill-bg: rgba(108, 99, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-link {
+            color: var(--text) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #6c63ff !important;
+            opacity: 1;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            border-color: #6c63ff;
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle .fa-sun {
+            color: #f59e0b;
+            font-size: 1rem;
+        }
+
+        .theme-toggle .fa-moon {
+            color: #8b5cf6;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .text-gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .typed-text {
+            color: #6c63ff;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 3px;
+            height: 1.5rem;
+            background: #6c63ff;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 0.7rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0 0.5rem;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #6c63ff;
+            background: transparent;
+            color: #6c63ff;
+        }
+
+        .btn-outline-primary:hover {
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 70px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-2);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-text h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .skills-badge {
+            display: inline-block;
+            background: var(--skill-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            margin: 0.3rem;
+            font-size: 0.8rem;
+            color: #a855f7;
+        }
+
+        .stat-box {
+            display: inline-block;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            margin: 0.8rem 0.8rem 0 0;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #6c63ff;
+        }
+
+        .stat-box .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: var(--surface-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            border-color: #6c63ff;
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.1);
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: var(--text);
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: rgba(108, 99, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 1.2s ease;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .service-card {
+            background: var(--surface-card);
+            border-radius: 20px;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #6c63ff;
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.1);
+        }
+
+        .service-icon {
+            font-size: 2.2rem;
+            color: #6c63ff;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .service-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Projects Section */
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: var(--text);
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #6c63ff;
+            border-color: #6c63ff;
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--surface-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #6c63ff;
+            box-shadow: 0 15px 30px -12px rgba(108, 99, 255, 0.2);
+        }
+
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #6c63ff, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.2rem;
+        }
+
+        .project-content h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .project-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.8rem 0;
+        }
+
+        .project-tag {
+            background: var(--skill-bg);
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: #a855f7;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .project-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.2s;
+        }
+
+        .project-link:hover {
+            color: #6c63ff;
+        }
+
+        /* Mini Apps Section */
+        .mini-apps {
+            background: var(--bg-3);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .app-card {
+            background: var(--surface-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            border-color: #6c63ff;
+            box-shadow: 0 15px 30px -12px rgba(108, 99, 255, 0.2);
+        }
+
+        .app-img {
+            height: 160px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-img .app-icon-large {
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .app-content {
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .app-content h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .app-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .app-btn {
+            padding: 0.4rem 1.2rem;
+            font-size: 0.75rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: var(--surface-card);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--skill-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #6c63ff;
+        }
+
+        .contact-text h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+
+        .contact-text p, .contact-text a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .form-control {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 0.7rem;
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .status-message {
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            padding: 40px 0 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-about p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .social-link {
+            width: 35px;
+            height: 35px;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #6c63ff;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .footer-links a:hover {
+            color: #6c63ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .skills-container,
+            .services-grid,
+            .projects-grid,
+            .apps-grid,
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .contact-container { grid-template-columns: 1fr; }
+            .section-title h2 { font-size: 1.8rem; }
+            .hero { padding: 100px 0 40px; min-height: auto; }
+            .btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; margin: 0.3rem; }
+            .skills-container,
+            .services-grid,
+            .projects-grid,
+            .apps-grid,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#navbar">
-    <!-- Navbar -->
-    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <!-- Navbar Brand -->
-<a class="navbar-brand" href="#">Benazir</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#mini-apps">Mini Apps</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Benazir</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="#mini-apps">Mini Apps</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-toggle ms-3" id="themeToggle">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Hero Section -->
-     <section id="hero" class="hero">
-         <div class="container">
-           <div class="row align-items-center">
-              <div class="col-lg-6">
-                  <div class="hero-content">
-                     <h1 class="hero-title">
-                        Hi, I'm <span class="text-gradient">Benazir</span> 
-                      </h1>
-                      <h2 class="hero-subtitle">
-                        Frontend Developer & Web App Creator
-                      </h2>
-                        <p class="hero-description">
-                        I craft responsive websites and interactive web applications with modern technologies. My passion is turning complex problems into intuitive, beautiful solutions.
-                      </p>
-                    
-                      <div class="hero-btns">
-                        <a href="#projects" class="btn btn-primary" aria-label="View my projects">
-                            <i class="fas fa-laptop-code" aria-hidden="true"></i> View My Work
-                        </a>
-                        <a href="#contact" class="btn btn-outline-primary" aria-label="Contact me">
-                            <i class="fas fa-paper-plane" aria-hidden="true"></i> Contact Me
-                        </a>
-                       </div>
-                </div>
+<!-- Hero Section -->
+<section id="hero" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Hi, I'm <span class="text-gradient">Benazir Samo</span>
+            </h1>
+            <h2 class="hero-subtitle">
+                <span class="typed-text"></span><span class="cursor-blink"></span>
+            </h2>
+            <p class="hero-description">
+                I build <strong>beautiful websites</strong> and <strong>powerful web applications</strong>. 
+                From business websites to complex web apps — I create digital solutions that work.
+            </p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary">
+                    <i class="fas fa-laptop-code"></i> View My Work
+                </a>
+                <a href="#contact" class="btn btn-outline-primary">
+                    <i class="fas fa-paper-plane"></i> Hire Me
+                </a>
+                <a href="https://github.com/BenazirSamo" target="_blank" class="btn btn-outline-primary">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
             </div>
         </div>
-    </section>
-    
+    </div>
+</section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-                <p>Get to know me better</p>
-            </div>
-            <div class="about-content fade-in">
-                <div class="about-text">
-                    <h3>Frontend Developer with Passion for Creating Interactive Web Experiences</h3>
-                    <p><span>Hello! I’m <span class="text-gradient">Benazir</span>,</span> a passionate Frontend Developer based in Karachi, Pakistan. I’m currently pursuing a diploma in AI Software Engineering from Aptech Metro Star Gate and constantly working to expand my skills to become a full-stack web developer.</p>
-                    <p>I specialize in building responsive and visually appealing websites using HTML, CSS, JavaScript, and Bootstrap. I’m also experienced with tools like GitHub for version control and Canva for creating clean, modern UI designs.</p>
-                    <p>My journey began with a strong curiosity for technology, which I’ve turned into hands-on skills through consistent learning and practice. I’ve created several real-world projects, including a jewelry  website,Vinegar-Food-Restaurant,coffee shop website, and various mini web apps like digital clocks, to-do lists,  notes tools, trivia quizzes, calculator apps, and more.</p>
-                      <p>I’m detail-oriented, self-driven, and always excited to learn new technologies. My goal is to build meaningful, user-friendly digital experiences that combine design with functionality.</p>
-                        <div class="stat-box">
-                            <div class="number">25+</div>
-                            <div class="label">Projects Completed</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="number">10+</div>
-                            <div class="label">Mini Apps Created</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- About Section -->
+<section id="about" class="about">
+    <div class="container">
+        <div class="section-title">
+            <h2>About Me</h2>
+            <p>Get to know me better</p>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Skills</h2>
-                <p>Technologies I work with</p>
-            </div>
-            <div class="skills-container">
-                <div class="skill-category fade-in">
-                    <h3>Frontend Development</h3>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>HTML5</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="95"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>CSS3</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="90"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>JavaScript</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="85"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>Bootstrap</span>
-                            <span>92%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="92"></div>
-                        </div>
-                    </div>
+        <div class="about-content fade-in">
+            <div class="about-text">
+                <h3>I Build <span class="text-gradient">Websites & Web Applications</span></h3>
+                <p>Hello! I'm <span class="text-gradient">Benazir Samo</span>, a passionate <strong>Full Stack Developer</strong> based in Karachi, Pakistan. I'm currently pursuing a diploma in AI Software Engineering from Aptech Metro Star Gate.</p>
+                <p>I specialize in building:</p>
+                <div>
+                    <span class="skills-badge"><i class="fas fa-globe"></i> Business Websites</span>
+                    <span class="skills-badge"><i class="fas fa-store"></i> E-Commerce Sites</span>
+                    <span class="skills-badge"><i class="fas fa-calendar-check"></i> Booking Systems</span>
+                    <span class="skills-badge"><i class="fas fa-chart-line"></i> Admin Dashboards</span>
+                    <span class="skills-badge"><i class="fas fa-mobile-alt"></i> Responsive Designs</span>
+                    <span class="skills-badge"><i class="fas fa-database"></i> Database Apps</span>
+                    <span class="skills-badge"><i class="fas fa-plug"></i> REST APIs</span>
                 </div>
-                
-                <div class="skill-category fade-in">
-                    <h3>Tools & Technologies</h3>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>Responsive Design</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="95"></div>
-                        </div>
+                <p>My technical toolkit includes: <strong>HTML5, CSS3, JavaScript, jQuery, Bootstrap, PHP, Laravel, MySQL, XML, JSON, REST APIs, Git & GitHub</strong>. I also create UI/UX designs using Canva and documentation with MS Office.</p>
+                <p>I've successfully delivered <strong>30+ projects</strong> including business websites, e-commerce platforms, restaurant booking systems, healthcare portals, and 15+ interactive web apps.</p>
+                <div>
+                    <div class="stat-box">
+                        <div class="number">30+</div>
+                        <div class="label">Total Projects</div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>Git & GitHub</span>
-                            <span>88%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="88"></div>
-                        </div>
+                    <div class="stat-box">
+                        <div class="number">15+</div>
+                        <div class="label">Websites</div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>Performance Optimization</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="80"></div>
-                        </div>
+                    <div class="stat-box">
+                        <div class="number">15+</div>
+                        <div class="label">Web Apps</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Featured Projects</h2>
-                <p>My recent work</p>
+<!-- Services Section -->
+<section id="services">
+    <div class="container">
+        <div class="section-title">
+            <h2>What I Can Build For You</h2>
+            <p>Websites & Web Applications — I do both!</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <h3>Business Websites</h3>
+                <p>Company profile, portfolio, brochure sites, landing pages</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-store"></i></div>
+                <h3>E-Commerce Websites</h3>
+                <p>Online stores with product catalogs & shopping carts</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3>Booking Systems</h3>
+                <p>Restaurant, hotel, appointment booking websites</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h3>Admin Dashboards</h3>
+                <p>Management panels with data visualization</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-plug"></i></div>
+                <h3>REST APIs</h3>
+                <p>Custom APIs for mobile apps & third-party integration</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon"><i class="fas fa-database"></i></div>
+                <h3>Database Applications</h3>
+                <p>CRUD apps, inventory systems, data management</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills">
+    <div class="container">
+        <div class="section-title">
+            <h2>My Technical Skills</h2>
+            <p>Technologies & tools I work with</p>
+        </div>
+        <div class="skills-container">
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-code"></i> Frontend Development</h3>
+                <div class="skill-item"><div class="skill-header"><span>HTML5</span><span>95%</span></div><div class="skill-bar"><div class="skill-progress" data-width="95"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>CSS3</span><span>90%</span></div><div class="skill-bar"><div class="skill-progress" data-width="90"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>JavaScript / Advanced JS</span><span>88%</span></div><div class="skill-bar"><div class="skill-progress" data-width="88"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>jQuery</span><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Bootstrap</span><span>92%</span></div><div class="skill-bar"><div class="skill-progress" data-width="92"></div></div></div>
             </div>
             
-            <div class="projects-filter">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="web">Websites</button>
-                <button class="filter-btn" data-filter="app">Apps</button>
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-server"></i> Backend & Database</h3>
+                <div class="skill-item"><div class="skill-header"><span>PHP</span><span>82%</span></div><div class="skill-bar"><div class="skill-progress" data-width="82"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Laravel</span><span>78%</span></div><div class="skill-bar"><div class="skill-progress" data-width="78"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>MySQL</span><span>80%</span></div><div class="skill-bar"><div class="skill-progress" data-width="80"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>REST APIs / JSON</span><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>XML</span><span>75%</span></div><div class="skill-bar"><div class="skill-progress" data-width="75"></div></div></div>
             </div>
             
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card fade-in" data-category="web">
-                    <div class="project-img">
-                        <img src="./images/1pair Exquisite And Elegant Butterfly Stud Earrings Suitable For Women In Any Occasion.jpeg" alt="jewelry website">
-                    </div>
-                    <div class="project-content">
-                        <h3>Pascal Jewels | Timeless Elegance in Every Piece</h3>
-                        <p>A modern jewelry website with product showcase, shopping cart, and user reviews.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://benazirsamo.github.io/Jewellery-website/" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/BenazirSamo/Jewellery-website" class="project-link"><i class="fab fa-github"></i> Source Code</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-tools"></i> Tools & Design</h3>
+                <div class="skill-item"><div class="skill-header"><span>Git & GitHub</span><span>88%</span></div><div class="skill-bar"><div class="skill-progress" data-width="88"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Responsive Design</span><span>95%</span></div><div class="skill-bar"><div class="skill-progress" data-width="95"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>Canva (UI/UX)</span><span>90%</span></div><div class="skill-bar"><div class="skill-progress" data-width="90"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><span>MS Office</span><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85"></div></div></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                <div class="project-card fade-in" data-category="web">
-                    <div class="project-img">
-                        <img src="./images/vinager food.png" alt="Vinegar Food Restaurant">
-                    </div>
-                    <div class="project-content">
-                        <h3>Vinegar Food Restaurant</h3>
-                        <p>A modern restaurant website with online reservation system, menu showcase, and gallery.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://benazirsamo.github.io/Vinegar-Food-Restaurant/" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/BenazirSamo/Vinegar-Food-Restaurant" class="project-link"><i class="fab fa-github"></i> Source Code</a>
-                        </div>
-                    </div>
+<!-- Projects Section -->
+<section id="projects" class="projects">
+    <div class="container">
+        <div class="section-title">
+            <h2>Featured Projects</h2>
+            <p>Websites & Web Applications I've built</p>
+        </div>
+        
+        <div class="projects-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="website">Websites</button>
+            <button class="filter-btn" data-filter="webapp">Web Apps</button>
+        </div>
+        
+        <div class="projects-grid">
+            <div class="project-card fade-in" data-category="website">
+                <div class="project-img" onclick="uploadImage(this)">
+                    <img src="./images/1pair Exquisite And Elegant Butterfly Stud Earrings Suitable For Women In Any Occasion.jpeg" width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%236c63ff'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E💎%3C/text%3E%3C/svg%3E" alt="Jewelry Website">
                 </div>
-                <!-- Project 3 -->
-               
-                 <div class="project-card fade-in" data-category="web">
-                    <div class="project-img">
-                        <img src="./images/Screenshot 2025-06-18 221846.png" alt="One Page Website">
-                    </div>
-                    <div class="project-content">
-                        <h3>One Page Website<br>coffee shop website</br></h3>
-                        <p>A clean and modern one-page website template, perfect for showcasing your portfolio or business.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://benazirsamo.github.io/one-page-website-/" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/BenazirSamo/one-page-website-" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i> Source Code
-                            </a>
-                        </div>
-                    </div>
-                </div> 
-                           <!-- Project 4 -->
-                 <div class="project-card fade-in" data-category="web">
-                    <div class="project-img">
-                        <img src="./images/cake delight (2).png" alt="Cake delight">
-                    </div>
-                    <div class="project-content">
-                        <h3>Cake Delight</h3>
-                        <p>"Welcome to Cakey Delights — where every slices is a celebration!" 🎂✨</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://benazirsamo.github.io/Cake-Delight-/" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/BenazirSamo/Cake-Delight-" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i> Source Code
-                            </a>
-                        </div>
-                    </div>
+                <div class="project-content">
+                    <h3>Pascal Jewels | Jewelry Website</h3>
+                    <p>Elegant jewelry e-commerce website with product showcase and shopping cart.</p>
+                    <div class="project-tags"><span>HTML5</span><span>CSS3</span><span>JS</span><span>Bootstrap</span></div>
+                    <div class="project-links"><a href="https://benazirsamo.github.io/Jewellery-website/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a><a href="https://github.com/BenazirSamo/Jewellery-website" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a></div>
                 </div>
-                  <!-- Project 5 -->
-                 <div class="project-card fade-in" data-category="web">
-                    <div class="project-img">
-                        <img src="./images/tastenest.png" alt="TASTENEST Restaurant">
-                    </div>
-                    <div class="project-content">
-                        <h3>TASTENEST Restaurant</h3>
-                        <p>"Welcome to TASTENEST — where every meal is a celebration!"🍽️</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://benazirsamo.github.i/IT-vision/" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/BenazirSamo/IT-vision" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i> Source Code
-                            </a>
-                        </div>
-                    </div>
             </div>
-            <!-- Project: 6 -->
-<div class="project-card fade-in" data-category="web">
-    <div class="project-img">
-        <img src="./images/bloom beauty.jpeg" alt="BLOOM BEAUTY">
-    </div>
-    <div class="project-content">
-        <h3>BLOOM BEAUTY</h3>
-        <p>"Bloom Beauty — where elegance meets care. ✨💄"</p>
-        <div class="project-tags">
-            <span class="project-tag">HTML</span>
-            <span class="project-tag">CSS</span>
-            <span class="project-tag">JavaScript</span>
-            <span class="project-tag">Responsive</span>
-        </div>
-        <div class="project-links">
             
-            <a href="https://benazirsamo.github.io/bloom-Beauty-/" class="project-link" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
-            <a href="https://github.com/BenazirSamo/bloom-Beauty-" class="project-link" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-github"></i> Source Code
-            </a>
-        </div>
-    </div>
-</div>
-<!-- Project: Travel Buddy -->
-<div class="project-card fade-in" data-category="web">
+            <div class="project-card fade-in" data-category="webapp">
+                <div class="project-img" onclick="uploadImage(this)">
+                    <img src="./images/vinager food.png" width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23a855f7'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🍽️%3C/text%3E%3C/svg%3E" alt="Restaurant Website">
+                </div>
+                <div class="project-content">
+                    <h3>Vinegar Food Restaurant</h3>
+                    <p>Restaurant website with online reservation system and menu management.</p>
+                    <div class="project-tags"><span>PHP</span><span>MySQL</span><span>Bootstrap</span><span>jQuery</span></div>
+                    <div class="project-links"><a href="https://benazirsamo.github.io/Vinegar-Food-Restaurant/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a><a href="https://github.com/BenazirSamo/Vinegar-Food-Restaurant" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a></div>
+                </div>
+            </div>
+            <!-- One Page Website -->
+<div class="project-card fade-in" data-category="website">
     <div class="project-img">
-        <img src="./images/Travel (3).jfif" alt="Travel Buddy">
+        <img src="./images/Screenshot 2025-06-18 221846.png" alt="One Page Website">
     </div>
     <div class="project-content">
-        <h3>Travel Buddy</h3>
-        <p>"Travel Buddy — explore the world with comfort and ease ✈️🌍"</p>
-        <div class="project-tags">
-            <span class="project-tag">HTML</span>
-            <span class="project-tag">CSS</span>
-            <span class="project-tag">JavaScript</span>
-            <span class="project-tag">Responsive</span>
-        </div>
-        <div class="project-links">
-            <a href="https://benazirsamo.github.io/Travel-Buddy-/" class="project-link" target="_blank" rel="noopener noreferrer">
-                <i class="fas fa-external-link-alt"></i> Live Demo
-            </a>
-            <a href="https://github.com/BenazirSamo/Travel-Buddy-" class="project-link" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-github"></i> Source Code
-            </a>
-        </div>
-    </div>
-</div>
-<!-- Project: MediCare Hospital -->
-<div class="project-card fade-in" data-category="web">
-    <div class="project-img">
-        <img src="./images/hospital.jfif" alt="MediCare Hospital">
-    </div>
-    <div class="project-content">
-        <h3>MediCare Hospital</h3>
-        <p>"MediCare Hospital — your health, our priority 🏥💙"</p>
+        <h3>One Page Website - Coffee Shop</h3>
+        <p>A clean and modern one-page coffee shop website template.</p>
+
         <div class="project-tags">
             <span class="project-tag">HTML</span>
             <span class="project-tag">CSS</span>
             <span class="project-tag">JavaScript</span>
             <span class="project-tag">Bootstrap</span>
-            <span class="project-tag">Responsive</span>
         </div>
+
         <div class="project-links">
-            <a href="https://benazirsamo.github.io/MediCare-Hospital-/" class="project-link" target="_blank" rel="noopener noreferrer">
+            <a href="https://benazirsamo.github.io/one-page-website-/" class="project-link" target="_blank">
                 <i class="fas fa-external-link-alt"></i> Live Demo
             </a>
-            <a href="https://github.com/BenazirSamo/MediCare-Hospital-" class="project-link" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://github.com/BenazirSamo/one-page-website-" class="project-link" target="_blank">
                 <i class="fab fa-github"></i> Source Code
             </a>
         </div>
     </div>
 </div>
+<!-- Cake Delight -->
+<div class="project-card fade-in" data-category="website">
+    <div class="project-img">
+        <img src="./images/cake delight (2).png" alt="Cake Delight">
+    </div>
 
+    <div class="project-content">
+        <h3>Cake Delight</h3>
+        <p>Welcome to Cakey Delights — where every slice is a celebration! 🎂✨</p>
 
-            
+        <div class="project-tags">
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">Bootstrap</span>
         </div>
-                 
-    </section>
 
-    <!-- Mini Apps Section -->
-    <section id="mini-apps" class="mini-apps">
-        <div class="container">
-            <div class="section-title">
-                <h2>Mini Apps</h2>
-                <p>Interactive apps I've created</p>
-            </div>
-            
-            <div class="apps-grid">
-                <!-- Tool 1 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <h3>Digital Clock</h3>
-                        <p>A sleek digital clock with timezone support, alarms, and multiple display themes.</p>
-                        <a href="https://benazirsamo.github.io/digital-clock/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-                
-                <!-- Tool 2 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                        <h3>Quote Generator</h3>
-                        <p>Inspirational quote generator with sharing functionality and favorite quotes saving.</p>
-                        <a href="https://benazirsamo.github.io/Inspirational-Quote-Generator/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-                
-                <!-- Tool 3 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <h3>To-Do List</h3>
-                        <p>Productivity tool with task management, categories, due dates, and progress tracking.</p>
-                        <a href="https://benazirsamo.github.io/To-Do-list/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-                
-                <!-- Tool 4 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <h3>Calculator</h3>
-                        <p>Advanced calculator with scientific functions, unit conversion, and calculation history.</p>
-                        <a href="https://benazirsamo.github.io/calculator-/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-                
-                <!-- Tool 5 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fas fa-question-circle"></i>
-                        </div>
-                        <h3>Quiz Tool</h3>
-                        <p>Interactive quiz tool with multiple categories, timers, and score tracking.</p>
-                        <a href="https://benazirsamo.github.io/trivia-Quiz/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-                <!-- Tool 6 -->
-                <div class="app-card fade-in">
-                    <div class="app-content">
-                        <div class="app-icon">
-                            <i class="fa-solid fa-book"></i>
-                        </div>
-                        <h3>Notes Tool</h3>
-                        <p>Users can add, delete, and save notes in the browser using localStorage.</p>
-                        <a href="https://benazirsamo.github.io/Note-tool/" class="btn btn-outline-primary app-btn">Try It Now</a>
-                    </div>
-                </div>
-            </div>
+        <div class="project-links">
+            <a href="https://benazirsamo.github.io/Cake-Delight-/" class="project-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+
+            <a href="https://github.com/BenazirSamo/Cake-Delight-" class="project-link" target="_blank">
+                <i class="fab fa-github"></i> Source Code
+            </a>
         </div>
-    </section>
+    </div>
+</div>
+<!-- TasteNest Restaurant -->
+<div class="project-card fade-in" data-category="website">
+    <div class="project-img">
+        <img src="./images/tastenest.png" alt="TasteNest Restaurant">
+    </div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Let's work together</p>
-            </div>
-            
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Location</h4>
-                            <p>Steeltown Gulshan-e-Hadeed, Karachi</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Email</h4>
-                            <p>benazirsamo70@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>GitHub</h4>
-                            <p><a href="https://github.com/BenazirSamo" target="_blank">https://github.com/BenazirSamo</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>LinkedIn</h4>
-                            <p><a href="https://www.linkedin.com/in/Benazir-Samo/" target="_blank">https://www.linkedin.com/in/benazir-samo-624664370/</a></p>
-                        </div>
-                    </div>
-                </div>
-                
-              <form id="contactForm">
-  <div class="form-group">
-    <input type="text" class="form-control m-b 5" id="name" name="from_name" placeholder="Your Name" required>
-  </div>
-  <div class="form-group">
-    <input type="email" class="form-control" id="email" name="from_email" placeholder="Your Email" required>
-  </div>
-  <div class="form-group">
-    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
-  </div>
-  <div class="form-group">
-    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Send Message</button>
-</form>
+    <div class="project-content">
+        <h3>TasteNest Restaurant</h3>
+        <p>Welcome to TasteNest — where every meal is a celebration! 🍽️</p>
 
-<!-- Message Status -->
-<div id="statusMessage" class="status-message"></div>
-
-            </div>
+        <div class="project-tags">
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">Bootstrap</span>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about fade-in">
-                    <div class="footer-logo">Benazir</div>
-                    <p>Frontend Developer specializing in creating beautiful, responsive websites and interactive web applications.</p>
-                    <div class="social-links">
-                        <a href="https://github.com/BenazirSamo" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/benazir-samo-624664370/" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a> 
-                    </div>
+        <div class="project-links">
+            <a href="https://benazirsamo.github.io/IT-vision/" class="project-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+
+            <a href="https://github.com/BenazirSamo/IT-vision" class="project-link" target="_blank">
+                <i class="fab fa-github"></i> Source Code
+            </a>
+        </div>
+    </div>
+</div>
+<div class="project-card fade-in" data-category="website">
+    <div class="project-img" onclick="uploadImage(this)">
+        <img src="./images/bloom beauty.jpeg" width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2306b6d4'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E💄%3C/text%3E%3C/svg%3E" alt="Beauty Salon">
+    </div>
+    <div class="project-content">
+        <h3>BLOOM BEAUTY Salon</h3>
+        <p>Modern salon website with service booking and testimonials.</p>
+        <div class="project-tags"><span>HTML5</span><span>CSS3</span><span>JS</span><span>Responsive</span></div>
+        <div class="project-links"><a href="https://benazirsamo.github.io/bloom-Beauty-/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a><a href="https://github.com/BenazirSamo/bloom-Beauty-" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a></div>
+    </div>
+</div>
+            
+            <div class="project-card fade-in" data-category="webapp">
+                <div class="project-img" onclick="uploadImage(this)">
+                    <img src="./images/hospital.jfif" width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ec4899'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E🏥%3C/text%3E%3C/svg%3E" alt="Hospital Management">
                 </div>
-                
-                <div class="footer-links fade-in">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#mini-apps">Mini Apps</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links fade-in">
-                    <h4>My Services</h4>
-                    <ul>
-                        <li><a href="#">Website Development</a></li>
-                        <li><a href="#">Responsive Design</a></li>
-                        <li><a href="#">Web Applications</a></li>
-                        <li><a href="#">Frontend Consulting</a></li>
-                    </ul>
+                <div class="project-content">
+                    <h3>MediCare Hospital</h3>
+                    <p>Hospital management system with appointment booking and patient records.</p>
+                    <div class="project-tags"><span>PHP</span><span>Laravel</span><span>MySQL</span><span>Bootstrap</span></div>
+                    <div class="project-links"><a href="https://benazirsamo.github.io/MediCare-Hospital-/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a><a href="https://github.com/BenazirSamo/MediCare-Hospital-" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a></div>
                 </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 Benazir. All rights reserved.</p>
+            
+            <div class="project-card fade-in" data-category="website">
+                <div class="project-img" onclick="uploadImage(this)">
+                    <img src="./images/Travel (3).jfif" width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2310b981'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='40'%3E✈️%3C/text%3E%3C/svg%3E" alt="Travel Website">
+                </div>
+                <div class="project-content">
+                    <h3>Travel Buddy</h3>
+                    <p>Travel booking platform with destination showcase and packages.</p>
+                    <div class="project-tags"><span>HTML5</span><span>CSS3</span><span>JS</span><span>Bootstrap</span></div>
+                    <div class="project-links"><a href="https://benazirsamo.github.io/Travel-Buddy-/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a><a href="https://github.com/BenazirSamo/Travel-Buddy-" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a></div>
+                </div>
+            </div>
+            <!-- Courier Management System -->
+<div class="project-card fade-in" data-category="website">
+    <div class="project-img">
+        <img src="./images/All my  (1).jfif" alt="Courier Management System">
+    </div>
+
+    <div class="project-content">
+        <h3>Courier Management System</h3>
+        <p>Smart courier tracking and delivery management platform with parcel booking, shipment tracking, and delivery status updates. 📦🚚</p>
+
+        <div class="project-tags">
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">Bootstrap</span>
+        </div>
+
+        <div class="project-links">
+            <a href="#" class="project-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+
+            <a href="#" class="project-link" target="_blank">
+                <i class="fab fa-github"></i> Source Code
+            </a>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</section>
+
+<!-- Mini Apps Section -->
+<section id="mini-apps" class="mini-apps">
+    <div class="container">
+        <div class="section-title">
+            <h2>Mini Apps</h2>
+            <p>Interactive web applications I've created</p>
+        </div>
+        
+        <div class="apps-grid">
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-clock"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>Digital Clock</h3>
+                    <p>Sleek digital clock with real-time display, alarms, and multiple themes.</p>
+                    <a href="https://benazirsamo.github.io/digital-clock/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-quote-right"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>Quote Generator</h3>
+                    <p>Inspirational quote generator with sharing functionality and favorites saving.</p>
+                    <a href="https://benazirsamo.github.io/Inspirational-Quote-Generator/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-tasks"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>To-Do List</h3>
+                    <p>Productivity tool with task management, categories, due dates, and progress tracking.</p>
+                    <a href="https://benazirsamo.github.io/To-Do-list/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-calculator"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>Calculator</h3>
+                    <p>Advanced calculator with scientific functions, unit conversion, and history.</p>
+                    <a href="https://benazirsamo.github.io/calculator-/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-question-circle"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>Trivia Quiz</h3>
+                    <p>Interactive quiz tool with multiple categories, timers, and score tracking.</p>
+                    <a href="https://benazirsamo.github.io/trivia-Quiz/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="app-card fade-in">
+                <div class="app-img">
+                    <div class="app-icon-large"><i class="fas fa-book"></i></div>
+                </div>
+                <div class="app-content">
+                    <h3>Notes Tool</h3>
+                    <p>Users can add, delete, and save notes in the browser using localStorage.</p>
+                    <a href="https://benazirsamo.github.io/Note-tool/" class="btn btn-outline-primary app-btn" target="_blank">Try It Now <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>Get In Touch</h2>
+            <p>Let's work together</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item fade-in">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text"><h4>Location</h4><p>Steeltown Gulshan-e-Hadeed, Karachi</p></div>
+                </div>
+                
+                <div class="contact-item fade-in">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text"><h4>Email</h4><p>benazirsamo70@gmail.com</p></div>
+                </div>
+                
+                <div class="contact-item fade-in">
+                    <div class="contact-icon"><i class="fab fa-github"></i></div>
+                    <div class="contact-text"><h4>GitHub</h4><p><a href="https://github.com/BenazirSamo" target="_blank">github.com/BenazirSamo</a></p></div>
+                </div>
+                
+                <div class="contact-item fade-in">
+                    <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                    <div class="contact-text"><h4>LinkedIn</h4><p><a href="https://www.linkedin.com/in/benazir-samo-624664370/" target="_blank">linkedin.com/in/benazir-samo</a></p></div>
+                </div>
+            </div>
+            
+            <form id="contactForm">
+                <div class="form-group"><input type="text" class="form-control" id="name" name="from_name" placeholder="Your Name" required></div>
+                <div class="form-group"><input type="email" class="form-control" id="email" name="from_email" placeholder="Your Email" required></div>
+                <div class="form-group"><input type="text" class="form-control" id="subject" name="subject" placeholder="Subject"></div>
+                <div class="form-group"><textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell me about your project..." required></textarea></div>
+                <button type="submit" class="btn btn-primary w-100">Send Message <i class="fas fa-paper-plane"></i></button>
+                <div id="statusMessage" class="status-message"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-about fade-in">
+                <div class="footer-logo">Benazir Samo</div>
+                <p>Full Stack Developer specializing in building beautiful websites and powerful web applications.</p>
+                <div class="social-links">
+                    <a href="https://github.com/BenazirSamo" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/benazir-samo-624664370/" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links fade-in">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#mini-apps">Mini Apps</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links fade-in">
+                <h4>My Services</h4>
+                <ul>
+                    <li><a href="#">Business Websites</a></li>
+                    <li><a href="#">E-Commerce Sites</a></li>
+                    <li><a href="#">Web Applications</a></li>
+                    <li><a href="#">REST APIs</a></li>
+                    <li><a href="#">Database Design</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Benazir Samo | Full Stack Developer | Websites & Web Apps</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+    // Image upload function for project cards
+    function uploadImage(element) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                const img = element.querySelector('img');
+                reader.onload = function(event) {
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    }
+    
+    // ========== THEME TOGGLE - WORKING 100% ==========
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Check localStorage for saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+    } else {
+        document.body.classList.remove('light-mode');
+    }
+    
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('light-mode')) {
+            document.body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    
+    // EmailJS
+    (function(){ emailjs.init("YOUR_PUBLIC_KEY"); })();
+    
+    const contactForm = document.getElementById('contactForm');
+    const statusDiv = document.getElementById('statusMessage');
+    
+    if(contactForm){
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusDiv.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending message...';
+            statusDiv.style.color = '#6c63ff';
+            try {
+                await emailjs.sendForm('service_abc123', 'template_xyz', contactForm);
+                statusDiv.innerHTML = '<span style="color: #10b981;">✓ Message sent successfully! I\'ll get back to you soon.</span>';
+                contactForm.reset();
+                setTimeout(() => statusDiv.innerHTML = '', 4000);
+            } catch(err) {
+                statusDiv.innerHTML = '<span style="color: #f43f5e;">⚠️ Email service demo. Please email me directly at benazirsamo70@gmail.com</span>';
+            }
+        });
+    }
+    
+    // Typing Animation
+    const roles = ["Full Stack Developer", "Website Creator", "Web App Developer", "PHP / Laravel Expert"];
+    let roleIndex = 0, charIndex = 0, isDeleting = false;
+    const typedElement = document.querySelector('.typed-text');
+    
+    function typeEffect() {
+        const currentRole = roles[roleIndex];
+        if(isDeleting) {
+            typedElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typedElement.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+        }
+        if(!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            setTimeout(typeEffect, 2000);
+            return;
+        }
+        if(isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            setTimeout(typeEffect, 500);
+            return;
+        }
+        setTimeout(typeEffect, isDeleting ? 60 : 100);
+    }
+    typeEffect();
+    
+    // Scroll Animations
+    const faders = document.querySelectorAll('.fade-in');
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('visible');
+                if(entry.target.classList.contains('skill-progress')) {
+                    entry.target.style.width = entry.target.getAttribute('data-width') + '%';
+                }
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    faders.forEach(el => observer.observe(el));
+    skillBars.forEach(bar => observer.observe(bar));
+    
+    // Project Filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-card');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            projects.forEach(proj => {
+                if(filter === 'all' || proj.getAttribute('data-category') === filter) {
+                    proj.style.display = 'block';
+                } else {
+                    proj.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Active Nav Link on Scroll
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if(window.scrollY >= sectionTop) current = section.getAttribute('id');
+        });
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('href') === `#${current}`) link.classList.add('active');
+        });
+    });
+    
+    // jQuery smooth scroll
+    $(document).ready(function() {
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            const target = $(this.getAttribute('href'));
+            if(target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 70
+                }, 600);
+            }
+        });
+    });
 </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- emailjs   -->
-     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-   <script src="script.js"></script>
 </body>
 </html>
